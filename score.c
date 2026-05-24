@@ -59,8 +59,8 @@ void sauvegarderScores(Joueur equipe[], int nbMembres, char nomGagnant[]) {
             fprintf(fichierEcr, "%s %d %d\n", baseDeDonnees[i].pseudo, baseDeDonnees[i].parties, baseDeDonnees[i].victoires);
         }
         fclose(fichierEcr);
-        printf("\n[Succes] L'historique du donjon a ete mis a jour.\n");
+        printf("\n[Succes] L'historique du donjon à été mis a jour.\n");
     } else {
-        printf("\n[Erreur] Impossible d'ecrire la sauvegarde.\n");
+        printf("\n[Erreur] Impossible d'écrire la sauvegarde.\n");
     }
 }

@@ -4,7 +4,7 @@
 
 void afficherMenuAccueil() {
     printf("\n\033[35m **************************************** \033[0m\n");
-    printf("\033[35m * BIENVENUE DANS CY-MEMO-RPG      * \033[0m\n");
+    printf("\033[35m * BIENVENUE DANS LE MEMO-RPG      * \033[0m\n");
     printf("\033[35m **************************************** \033[0m\n\n");
 }
 
@@ -40,7 +40,7 @@ int choisirAction() {
     int choixMenu = 0;
     while(1) {
         printf("\n--- ACTION DU TOUR ---\n");
-        printf("1. Se deplacer dans le donjon\n");
+        printf("1. Se déplacer dans le donjon\n");
         printf("2. Combattre\n");
         printf("3. Fuir (Quitter le jeu)\n");
         printf("=> Que voulez-vous faire ? (1-3) : ");

@@ -26,7 +26,7 @@ int main() {
 
     Joueur equipe[4];
 
-    // Création des profils et placement asymétrique ("en moulin")
+    // Création des profils, attribution des classes et placement asymétrique
     for(int i = 0; i < nbParticipants; i++) {
         printf("\nJoueur %d, quel est votre pseudo ? : ", i + 1);
         scanf("%s", equipe[i].pseudo);
@@ -35,16 +35,35 @@ int main() {
         equipe[i].tresorTrouve = 0;
         equipe[i].peutTeleporter = 0;
 
-        // LES NOUVELLES COORDONNÉES SONT ICI
         switch(i) {
-            case 0: equipe[i].ligne = -1; equipe[i].colonne = 3; break; // Nord (décalé à droite)
-            case 1: equipe[i].ligne = 1;  equipe[i].colonne = -1; break; // Ouest (décalé en haut)
-            case 2: equipe[i].ligne = 5;  equipe[i].colonne = 1; break; // Sud (décalé à gauche)
-            case 3: equipe[i].ligne = 3;  equipe[i].colonne = 5; break; // Est (décalé en bas)
+            case 0: 
+                strcpy(equipe[i].classe, "Guerrier");
+                equipe[i].ligne = -1; equipe[i].colonne = 3; 
+                break; // Nord (décalé à droite)
+            case 1: 
+                strcpy(equipe[i].classe, "Ranger");
+                equipe[i].ligne = 1;  equipe[i].colonne = -1; 
+                break; // Ouest (décalé en haut)
+            case 2: 
+                strcpy(equipe[i].classe, "Magicien");
+                equipe[i].ligne = 5;  equipe[i].colonne = 1; 
+                break; // Sud (décalé à gauche)
+            case 3: 
+                strcpy(equipe[i].classe, "Voleur");
+                equipe[i].ligne = 3;  equipe[i].colonne = 5; 
+                break; // Est (décalé en bas)
         }
     }
 
     printf("\n--- L'EQUIPE EST PRETE ! LA QUETE DEMARRE ! ---\n");
+    printf("\n🛡️ RAPPEL DES MISSIONS :\n");
+    for(int i = 0; i < nbParticipants; i++) {
+        if(i == 0) printf("- %s (Guerrier) doit trouver l'Epee de feu [⚔️]\n", equipe[i].pseudo);
+        if(i == 1) printf("- %s (Ranger) doit trouver le Baton de controle [🦯]\n", equipe[i].pseudo);
+        if(i == 2) printf("- %s (Magicien) doit trouver le Grimoire [📖]\n", equipe[i].pseudo);
+        if(i == 3) printf("- %s (Voleur) doit trouver la Dague de sommeil [🗡️]\n", equipe[i].pseudo);
+    }
+    printf("N'oubliez pas : il vous faut absolument un Tresor [💰] et votre Arme Antique pour gagner !\n\n");
     
     Case carteDonjon[5][5];
     initialisation(carteDonjon);
@@ -56,7 +75,7 @@ int main() {
     while (partieEnCours == 1) {
         int tourTermine = 0;
         printf("\n========================================\n");
-        printf("     C'EST AU TOUR DE : %s\n", equipe[indexJoueur].pseudo);
+        printf("     C'EST AU TOUR DE : %s (%s)\n", equipe[indexJoueur].pseudo, equipe[indexJoueur].classe);
         printf("========================================\n");
 
         equipe[indexJoueur].armeActive = choisirArme();
@@ -114,7 +133,6 @@ int main() {
                 } else {
                     printf("☠️ AIE ! Ton arme est inefficace. Tu es vaincu...\n");
                     
-                    // Renvoi asymétrique en cas de mort
                     switch(indexJoueur) {
                         case 0: equipe[indexJoueur].ligne = -1; equipe[indexJoueur].colonne = 3; break;
                         case 1: equipe[indexJoueur].ligne = 1;  equipe[indexJoueur].colonne = -1; break;
@@ -132,10 +150,10 @@ int main() {
                 }
             } 
             else if (strcmp(objetTrouve, "tresor") == 0) {
-                printf("💰 INCROYABLE ! %s a trouve le coffre au tresor !\n", equipe[indexJoueur].pseudo);
+                printf("💰 INCROYABLE ! %s (%s) a trouve le coffre au tresor !\n", equipe[indexJoueur].pseudo, equipe[indexJoueur].classe);
                 equipe[indexJoueur].tresorTrouve = 1;
                 if (equipe[indexJoueur].armeAntiqueTrouvee == 1) {
-                    printf("🏆 VICTOIRE ! %s possede son arme ET le tresor.\n", equipe[indexJoueur].pseudo);
+                    printf("🏆 VICTOIRE ! %s (%s) possede son arme ET le tresor.\n", equipe[indexJoueur].pseudo, equipe[indexJoueur].classe);
                     partieEnCours = 0;
                 } else {
                     printf("Il ne te manque plus que ton arme antique pour gagner !\n");
@@ -150,10 +168,10 @@ int main() {
                 else strcpy(armeRequise, "dague_sommeil");
 
                 if (strcmp(objetTrouve, armeRequise) == 0) {
-                    printf("✨ MAGNIFIQUE ! %s a trouve SON arme antique : %s !\n", equipe[indexJoueur].pseudo, armeRequise);
+                    printf("✨ MAGNIFIQUE ! %s (%s) a trouve SON arme antique : %s !\n", equipe[indexJoueur].pseudo, equipe[indexJoueur].classe, armeRequise);
                     equipe[indexJoueur].armeAntiqueTrouvee = 1;
                     if (equipe[indexJoueur].tresorTrouve == 1) {
-                        printf("🏆 VICTOIRE TOTALE ! %s possede son arme ET un tresor.\n", equipe[indexJoueur].pseudo);
+                        printf("🏆 VICTOIRE TOTALE ! %s (%s) possede son arme ET un tresor.\n", equipe[indexJoueur].pseudo, equipe[indexJoueur].classe);
                         partieEnCours = 0;
                     } else {
                         printf("Il ne te manque plus qu'un tresor pour gagner !\n");
@@ -163,7 +181,7 @@ int main() {
                 }
             } 
             else if (strcmp(objetTrouve, "portail") == 0) {
-                printf("🌀 PORTAIL MAGIQUE ! %s peut se teleporter n'importe ou au prochain tour !\n", equipe[indexJoueur].pseudo);
+                printf("🌀 PORTAIL MAGIQUE ! %s (%s) peut se teleporter n'importe ou au prochain tour !\n", equipe[indexJoueur].pseudo, equipe[indexJoueur].classe);
                 equipe[indexJoueur].peutTeleporter = 1;
             } 
             else if (strcmp(objetTrouve, "totem") == 0) {
@@ -192,7 +210,7 @@ int main() {
     joueurFantome.ligne = -10; joueurFantome.colonne = -10;
     afficherPlateau(carteDonjon, joueurFantome);
     
-    printf("\nBravo a %s ! --- FIN DE LA PARTIE ---\n", equipe[indexJoueur].pseudo);
+    printf("\n🏆 Bravo a %s (%s) ! --- FIN DE LA PARTIE ---\n", equipe[indexJoueur].pseudo, equipe[indexJoueur].classe);
     sauvegarderScores(equipe, nbParticipants, equipe[indexJoueur].pseudo);
     
     return 0;

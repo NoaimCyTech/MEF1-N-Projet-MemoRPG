@@ -17,7 +17,7 @@ int resoudreCombat(char monstre[], int armeChoisie) {
 
 void executerTotem(Case grille[5][5], Joueur heros[], int tourActuel) {
     int ligneCible, colCible;
-    printf("\n🗿 TOTEM DE TRANSMUTATION ! Fin de ton tour.\n");
+    printf("\nTotem de transmutation trouvé, fin de ton tour.\n");
 
     // Boucle sécurisée avec gestion des limites de la grille
     while (1) {
@@ -30,10 +30,10 @@ void executerTotem(Case grille[5][5], Joueur heros[], int tourActuel) {
             if (grille[ligneCible][colCible].estCachee == 1) {
                 break; // Coordonnées valides et case cachée, on sort de la boucle
             } else {
-                printf("⚠️ Erreur : Case deja revelee.\n");
+                printf("⚠️ Erreur : Case déjà révélée.\n");
             }
         } else {
-            printf("⚠️ Erreur : Coordonnees hors du donjon.\n");
+            printf("⚠️ Erreur : Coordonnées hors du donjon.\n");
         }
     }
 
